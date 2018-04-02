@@ -17,5 +17,6 @@
         <form action="../controllers/RegisterController.php" method="post">
             <button type="submit" class="btn btn-primary">Załóż konto</button>
         </form>
+        <p>{{info}}</p>
     </div>
 </div>

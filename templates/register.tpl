@@ -13,6 +13,14 @@
                 <input type="password" class="form-control" id="pwd" name="password">
             </div>
             <button type="submit" class="btn btn-default">Załóż konto</button>
+            <br>
+            <div class="radio-inline">
+                <label><input type="radio" name="role" value="client" checked="checked">Klient</label>
+            </div>
+            <div class="radio-inline">
+                <label><input type="radio" name="role" value="support">Support</label>
+            </div>
         </form>
+        <p>{{info}}</p>
     </div>
 </div>

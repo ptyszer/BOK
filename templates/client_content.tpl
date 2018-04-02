@@ -4,12 +4,7 @@
             <h3>Wątki</h3>
         </div>
         <div>
-            <table class="table">
-                <tr>
-                    <th>Temat</th>
-                </tr>
-                {{conversations}}
-            </table>
+            {{conversations}}
         </div>
     </div>
     <div class="col-md-8 colHeight">
@@ -17,21 +12,16 @@
             <h3>Chat</h3>
         </div>
         <div>
-            <table class="table">
-                <tr>
-                    <th>Nadawca</th>
-                    <th>Wiadomość</th>
-                </tr>
-                {{messages}}
-            </table>
+            {{messages}}
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-4">
         <form class="form-inline" method="post" action="../controllers/ConversationController.php">
-            <label for="conversationSubject" id="newConvSubject">Temat: <input id="conversationSubject" type="text" placeholder="Temat..."></label>
+            <label for="conversationSubject" id="newConvSubject">Nowy temat:<br><input id="conversationSubject" name="conversationSubject" type="text" placeholder="Temat..."></label>
             <button class="btn">Dodaj...</button>
         </form>
     </div>
+    {{message_form}}
 </div>

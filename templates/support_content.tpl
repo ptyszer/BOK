@@ -4,12 +4,7 @@
             <h3>Moje Wątki</h3>
         </div>
         <div>
-            <table class="table">
-                <tr>
-                    <th>Temat</th>
-                </tr>
-                {{conversations}}
-            </table>
+            {{conversations}}
         </div>
     </div>
     <div class="col-md-4 colHeight">
@@ -17,13 +12,7 @@
             <h3>Otwarte wątki</h3>
         </div>
         <div>
-            <table class="table">
-                <tr>
-                    <th>Temat</th>
-                    <th></th>
-                </tr>
-                {{openConverstaions}}
-            </table>
+            {{openConversations}}
         </div>
     </div>
     <div class="col-md-4 colHeight">
@@ -31,21 +20,10 @@
             <h3>Chat</h3>
         </div>
         <div>
-            <table class="table">
-                <tr>
-                    <th>Nadawca</th>
-                    <th>Wiadomość</th>
-                </tr>
-                {{messages}}
-            </table>
+            {{messages}}
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <form class="form-inline">
-            <label for="conversationSubject" id="newConvSubject">Temat: <input id="conversationSubject" type="text" placeholder="Temat..."></label>
-            <button class="btn">Dodaj...</button>
-        </form>
-    </div>
+    {{message_form}}
 </div>
