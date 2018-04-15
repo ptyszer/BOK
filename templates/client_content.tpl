@@ -18,9 +18,9 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <form class="form-inline" method="post" action="../controllers/ConversationController.php">
+        <form class="form-inline conversationAdd" method="post" ><!--action="../controllers/ConversationController.php">-->
             <label for="conversationSubject" id="newConvSubject">Nowy temat:<br><input id="conversationSubject" name="conversationSubject" type="text" placeholder="Temat..."></label>
-            <button class="btn">Dodaj...</button>
+            <button class="btn add">Dodaj...</button>
         </form>
     </div>
     {{message_form}}

@@ -73,23 +73,34 @@ class Conversation
 
     public function saveToDB(PDO $conn)
     {
-        if ($this->id == -1) {
-
-            $sql = 'INSERT INTO conversations(subject, clientId, supportId, creationDate) VALUES(:subject, :clientId, :supportId, :creationDate)';
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->execute(['subject' => $this->subject,
-                'clientId' => $this->clientId,
-                'supportId' => $this->supportId,
-                'creationDate' => $this->creationDate]);
-            if ($result !== false) {
-                $this->id = $conn->lastInsertId();
-                return true;
-            }
+        $sql = 'INSERT INTO conversations(subject, clientId, supportId, creationDate) VALUES(:subject, :clientId, :supportId, :creationDate)';
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->execute(['subject' => $this->subject,
+            'clientId' => $this->clientId,
+            'supportId' => $this->supportId,
+            'creationDate' => $this->creationDate]);
+        if ($result !== false) {
+            $this->id = $conn->lastInsertId();
+            return $this;
         }
         return false;
     }
 
-    static public function loadAllConversationsByClientId(PDO $conn, $clientId){
+    public function update(PDO $conn)
+    {
+        $sql = 'UPDATE conversations SET supportId=:supportId WHERE id=:id';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $this->getId(), PDO::PARAM_INT);
+        $stmt->bindValue(':supportId', $this->getSupportId(), PDO::PARAM_INT);
+        $result = $stmt->execute();
+        if ($result !== false) {
+            return $this;
+        }
+        return false;
+    }
+
+    static public function loadAllConversationsByClientId(PDO $conn, $clientId)
+    {
         $ret = [];
         $stmt = $conn->prepare('SELECT * FROM conversations WHERE clientId=:clientId ORDER BY creationDate DESC');
         $result = $stmt->execute(['clientId' => $clientId]);
@@ -108,7 +119,8 @@ class Conversation
         return null;
     }
 
-    static public function loadAllConversationsBySupportId(PDO $conn, $supportId){
+    static public function loadAllConversationsBySupportId(PDO $conn, $supportId)
+    {
         $ret = [];
         $stmt = $conn->prepare('SELECT * FROM conversations WHERE supportId=:supportId ORDER BY creationDate DESC');
         $result = $stmt->execute(['supportId' => $supportId]);
@@ -127,7 +139,8 @@ class Conversation
         return null;
     }
 
-    static public function loadOpenConversations(PDO $conn){
+    static public function loadOpenConversations(PDO $conn)
+    {
         $ret = [];
         $result = $conn->query('SELECT * FROM conversations WHERE supportId IS NULL ORDER BY creationDate DESC');
         if ($result !== false && $result->rowCount() > 0) {

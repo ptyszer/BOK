@@ -8,8 +8,7 @@ require __DIR__ . '/../src/User.php';
 
 session_start();
 
-$db = Database::getInstance();
-$conn = $db->getConnection();
+$conn = Database::getInstance();
 
 if (!isset($_SESSION['user'])) {
     header("Location: LoginController.php");

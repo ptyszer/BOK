@@ -8,8 +8,7 @@ require __DIR__ . '/../src/User.php';
 
 session_start();
 
-$db = Database::getInstance();
-$conn = $db->getConnection();
+$conn = Database::getInstance();
 
 if (!isset($_SESSION['user'])) {
     header("Location: LoginController.php");
@@ -19,6 +18,10 @@ if (!isset($_SESSION['user'])) {
 $user = User::loadUserById($conn, $_SESSION['user']);
 $openConversations = Conversation::loadOpenConversations($conn);
 $myConversations = Conversation::loadAllConversationsBySupportId($conn, $_SESSION['user']);
+$currentConversationId = null;
+$currentSubject = null;
+$messages = null;
+$messageForm = '';
 
 if (!$myConversations) {
     $myConversationsContent = "<i>brak przypisanych wątków...</i>";
@@ -59,6 +62,7 @@ if (!$openConversations) {
     $rowsTemplate = [];
     foreach ($openConversations as $conversation) {
         $row = new Template(__DIR__ . '/../templates/open_conversation_row.tpl');
+        $row->add('conversationId', $conversation->getId());
         $row->add('conversationSubject', $conversation->getSubject());
         $rowsTemplate[] = $row;
     }

@@ -6,8 +6,7 @@ require __DIR__ . '/../src/User.php';
 
 session_start();
 
-$db = Database::getInstance();
-$conn = $db->getConnection();
+$conn = Database::getInstance();
 $info = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

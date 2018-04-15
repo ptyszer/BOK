@@ -26,7 +26,7 @@ class Database
         if (!self::$instance) {
             self::$instance = new self();
         }
-        return self::$instance;
+        return self::$instance->getConnection();
     }
 
     public function getConnection()

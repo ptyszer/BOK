@@ -65,23 +65,21 @@ class Message
 
     public function saveToDB(PDO $conn)
     {
-        if ($this->id == -1) {
-
-            $sql = 'INSERT INTO messages(conversationId, senderId, text, creationDate) VALUES(:conversationId, :senderId, :text, :creationDate)';
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->execute(['conversationId' => $this->conversationId,
-                'senderId' => $this->senderId,
-                'text' => $this->text,
-                'creationDate' => $this->creationDate]);
-            if ($result !== false) {
-                $this->id = $conn->lastInsertId();
-                return true;
-            }
+        $sql = 'INSERT INTO messages(conversationId, senderId, text, creationDate) VALUES(:conversationId, :senderId, :text, :creationDate)';
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->execute(['conversationId' => $this->conversationId,
+            'senderId' => $this->senderId,
+            'text' => $this->text,
+            'creationDate' => $this->creationDate]);
+        if ($result !== false) {
+            $this->id = $conn->lastInsertId();
+            return $this;
         }
         return false;
     }
 
-    static public function loadAllMessages(PDO $conn, $conversationId){
+    static public function loadAllMessages(PDO $conn, $conversationId)
+    {
         $ret = [];
         $stmt = $conn->prepare('SELECT * FROM messages WHERE conversationId=:conversationId ORDER BY creationDate DESC');
         $result = $stmt->execute(['conversationId' => $conversationId]);
