@@ -53,8 +53,6 @@ class User
 
     public function saveToDB(PDO $conn)
     {
-        if ($this->id == -1) {
-
             $sql = 'INSERT INTO users(login, hash_pass, role) VALUES(:login, :pass, :role)';
             $stmt = $conn->prepare($sql);
             $result = $stmt->execute(['login' => $this->login, 'pass' => $this->hashPass, 'role' => $this->role]);
@@ -62,13 +60,6 @@ class User
                 $this->id = $conn->lastInsertId();
                 return true;
             }
-        } else {
-            $stmt = $conn->prepare('UPDATE users SET login=:login, hash_pass=:hash_pass WHERE  id=:id ');
-            $result = $stmt->execute(['login' => $this->login, 'hash_pass' => $this->hashPass, 'id' => $this->id]);
-            if ($result === true) {
-                return true;
-            }
-        }
         return false;
     }
 
